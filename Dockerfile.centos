@@ -1,6 +1,6 @@
-# CentOS 7/8/Stream 版本
-# 适用于 CentOS 服务器的 Docker 部署
-FROM centos:stream9
+# AlmaLinux 9 版本
+# 适用于 AlmaLinux/Rocky Linux 9 服务器的 Docker 部署
+FROM almalinux:9
 
 # 设置环境变量
 ENV NODE_VERSION=20
@@ -8,8 +8,8 @@ ENV PORT=6000
 ENV TZ=Asia/Shanghai
 
 # 安装 EPEL 和必要依赖
-RUN yum install -y epel-release && \
-    yum install -y \
+RUN dnf install -y epel-release && \
+    dnf install -y \
     cups \
     cups-client \
     cups-libs \
@@ -19,12 +19,12 @@ RUN yum install -y epel-release && \
     iputils \
     wget \
     shadow-utils \
-    && yum clean all
+    && dnf clean all
 
 # 安装 Node.js 20
 RUN curl -fsSL https://rpm.nodesource.com/setup_20.x | bash - && \
-    yum install -y nodejs && \
-    yum clean all
+    dnf install -y nodejs && \
+    dnf clean all
 
 # 验证安装
 RUN node -v && npm -v

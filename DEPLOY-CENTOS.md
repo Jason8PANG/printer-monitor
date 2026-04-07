@@ -1,6 +1,6 @@
-# 🐧 CentOS Docker 部署指南
+# 🐧 AlmaLinux 9 Docker 部署指南
 
-适用于 CentOS 7/8/Stream 服务器，使用 Docker 容器部署打印机监控服务。
+适用于 AlmaLinux 9 / Rocky Linux 9 / RHEL 9 服务器，使用 Docker 容器部署打印机监控服务。
 
 ---
 
@@ -8,7 +8,7 @@
 
 | 项目 | 要求 |
 |------|------|
-| 操作系统 | CentOS 7/8/Stream 9 |
+| 操作系统 | AlmaLinux 9 / Rocky Linux 9 / RHEL 9 |
 | Docker | 20.10+ |
 | Docker Compose | 2.0+ (可选) |
 | 内存 | 最低 512MB |
@@ -23,7 +23,7 @@
 
 ```bash
 # 卸载旧版本（如果有）
-sudo yum remove -y docker \
+sudo dnf remove -y docker \
     docker-client \
     docker-client-latest \
     docker-common \
@@ -33,13 +33,13 @@ sudo yum remove -y docker \
     docker-engine
 
 # 安装 yum 工具包
-sudo yum install -y yum-utils
+sudo dnf install -y yum-utils
 
 # 添加 Docker 仓库
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
 # 安装 Docker Engine
-sudo yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # 启动 Docker
 sudo systemctl start docker
@@ -115,7 +115,7 @@ ss -tlnp | grep -E '3000|631'
 set -e
 
 echo "=========================================="
-echo "  🖨️  打印机监控 - CentOS Docker 部署"
+echo "  🖨️  打印机监控 - AlmaLinux Docker 部署"
 echo "=========================================="
 
 # 检查 Docker
@@ -255,7 +255,7 @@ docker compose -f docker-compose.centos.yml up -d
 
 ## 🔐 防火墙配置
 
-### firewalld (CentOS 7/8)
+### firewalld (AlmaLinux 7/8)
 
 ```bash
 # 开放端口

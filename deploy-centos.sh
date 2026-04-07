@@ -2,7 +2,7 @@
 set -e
 
 # ============================================
-# CentOS Docker 一键部署脚本
+# AlmaLinux Docker 一键部署脚本
 # ============================================
 
 RED='\033[0;31m'
@@ -46,7 +46,7 @@ install_docker() {
     }
     
     # 安装 Docker
-    yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     
     # 启动 Docker
     systemctl start docker
