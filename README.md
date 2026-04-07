@@ -41,7 +41,7 @@ docker-compose up -d --build
 docker-compose logs -f
 
 # 4. 访问 Web 界面
-# http://localhost:3000
+# http://localhost:6000
 # CUPS 原生界面：http://localhost:631
 ```
 
@@ -55,7 +55,7 @@ docker build -t printer-monitor .
 docker run -d \
   --name printer-monitor \
   --privileged \
-  -p 3000:3000 \
+  -p 3000:6000 \
   -p 631:631 \
   -v cups-config:/etc/cups \
   -v cups-logs:/var/log/cups \
@@ -81,7 +81,7 @@ npm install
 # 3. 启动服务
 npm start
 
-# 4. 访问 http://localhost:3000
+# 4. 访问 http://localhost:6000
 ```
 
 ## 🔧 配置说明

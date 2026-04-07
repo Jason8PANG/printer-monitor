@@ -101,10 +101,10 @@ configure_firewall() {
     log_info "配置防火墙..."
     
     if command -v firewall-cmd &> /dev/null; then
-        firewall-cmd --add-port=3000/tcp --permanent 2>/dev/null || true
+        firewall-cmd --add-port=6000/tcp --permanent 2>/dev/null || true
         firewall-cmd --add-port=631/tcp --permanent 2>/dev/null || true
         firewall-cmd --reload 2>/dev/null || true
-        log_success "firewalld: 端口 3000, 631 已开放"
+        log_success "firewalld: 端口 6000, 631 已开放"
     fi
     
     # SELinux
@@ -134,12 +134,12 @@ docker run -d \
   --name printer-monitor \
   --privileged \
   --restart unless-stopped \
-  -p 3000:3000 \
+  -p 6000:6000 \
   -p 631:631 \
   -v printer-data:/var/log/cups \
   -v printer-config:/etc/cups \
   -e TZ=Asia/Shanghai \
-  -e PORT=3000 \
+  -e PORT=6000 \
   printer-monitor:centos
 
 # 等待启动
@@ -157,7 +157,7 @@ if docker ps | grep -q printer-monitor; then
     echo "=========================================="
     echo ""
     echo "🌐 访问地址:"
-    echo "   监控面板：http://${SERVER_IP}:3000"
+    echo "   监控面板：http://${SERVER_IP}:6000"
     echo "   CUPS 管理：http://${SERVER_IP}:631"
     echo ""
     echo "📋 容器信息:"

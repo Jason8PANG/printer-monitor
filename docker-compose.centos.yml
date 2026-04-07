@@ -9,7 +9,7 @@ services:
     container_name: printer-monitor
     privileged: true
     ports:
-      - "3000:3000"
+      - "6000:6000"
       - "631:631"
     volumes:
       # CUPS 日志持久化
@@ -18,7 +18,7 @@ services:
       - printer-config:/etc/cups
     environment:
       - TZ=Asia/Shanghai
-      - PORT=3000
+      - PORT=6000
     restart: unless-stopped
     networks:
       - printer-net

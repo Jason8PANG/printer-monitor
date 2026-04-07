@@ -79,12 +79,12 @@ docker run -d \
   --name printer-monitor \
   --privileged \
   --restart unless-stopped \
-  -p 3000:3000 \
+  -p 3000:6000 \
   -p 631:631 \
   -v printer-data:/var/log/cups \
   -v printer-config:/etc/cups \
   -e TZ=Asia/Shanghai \
-  -e PORT=3000 \
+  -e PORT=6000 \
   printer-monitor:centos
 ```
 
@@ -98,7 +98,7 @@ docker ps | grep printer-monitor
 docker logs printer-monitor
 
 # 测试 Web 界面
-curl http://localhost:3000
+curl http://localhost:6000
 
 # 检查端口
 ss -tlnp | grep -E '3000|631'
@@ -161,12 +161,12 @@ docker run -d \
   --name printer-monitor \
   --privileged \
   --restart unless-stopped \
-  -p 3000:3000 \
+  -p 3000:6000 \
   -p 631:631 \
   -v printer-data:/var/log/cups \
   -v printer-config:/etc/cups \
   -e TZ=Asia/Shanghai \
-  -e PORT=3000 \
+  -e PORT=6000 \
   printer-monitor:centos
 
 # 等待启动
@@ -180,7 +180,7 @@ if docker ps | grep -q printer-monitor; then
     echo "=========================================="
     echo ""
     echo "🌐 访问地址:"
-    echo "   监控面板：http://$(hostname -i 2>/dev/null || echo 'localhost'):3000"
+    echo "   监控面板：http://$(hostname -i 2>/dev/null || echo 'localhost'):6000"
     echo "   CUPS 管理：http://$(hostname -i 2>/dev/null || echo 'localhost'):631"
     echo ""
     echo "📋 常用命令:"
@@ -219,19 +219,19 @@ services:
     container_name: printer-monitor
     privileged: true
     ports:
-      - "3000:3000"
+      - "3000:6000"
       - "631:631"
     volumes:
       - printer-data:/var/log/cups
       - printer-config:/etc/cups
     environment:
       - TZ=Asia/Shanghai
-      - PORT=3000
+      - PORT=6000
     restart: unless-stopped
     networks:
       - printer-net
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      test: ["CMD", "curl", "-f", "http://localhost:6000/"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -259,7 +259,7 @@ docker compose -f docker-compose.centos.yml up -d
 
 ```bash
 # 开放端口
-sudo firewall-cmd --add-port=3000/tcp --permanent
+sudo firewall-cmd --add-port=6000/tcp --permanent
 sudo firewall-cmd --add-port=631/tcp --permanent
 sudo firewall-cmd --reload
 
@@ -338,7 +338,7 @@ ExecStart=/usr/bin/docker run -d \
   --name printer-monitor \
   --privileged \
   --restart unless-stopped \
-  -p 3000:3000 \
+  -p 3000:6000 \
   -p 631:631 \
   -v printer-data:/var/log/cups \
   -v printer-config:/etc/cups \
@@ -388,7 +388,7 @@ docker stop printer-monitor
 docker rm printer-monitor
 docker build -f Dockerfile.centos -t printer-monitor:centos .
 docker run -d --name printer-monitor --privileged --restart unless-stopped \
-  -p 3000:3000 -p 631:631 \
+  -p 3000:6000 -p 631:631 \
   -v printer-data:/var/log/cups -v printer-config:/etc/cups \
   -e TZ=Asia/Shanghai printer-monitor:centos
 ```

@@ -166,7 +166,7 @@ Requires=cups.service
 Type=simple
 User=root
 WorkingDirectory=${DEPLOY_DIR}/current
-Environment=PORT=3000
+Environment=PORT=6000
 Environment=TZ=Asia/Shanghai
 ExecStart=/usr/bin/node ${DEPLOY_DIR}/current/server.js
 Restart=always
@@ -192,7 +192,7 @@ EOF
     
     # 6. 配置防火墙（如果需要）
     log_info "配置防火墙..."
-    ssh_cmd "firewall-cmd --add-port=3000/tcp --permanent 2>/dev/null || true"
+    ssh_cmd "firewall-cmd --add-port=6000/tcp --permanent 2>/dev/null || true"
     ssh_cmd "firewall-cmd --reload 2>/dev/null || true"
     ssh_cmd "ufw allow 3000/tcp 2>/dev/null || true"
     
@@ -209,7 +209,7 @@ EOF
         echo "=========================================="
         echo ""
         echo "  服务状态：运行中 ✅"
-        echo "  访问地址：http://${SERVER_HOST}:3000"
+        echo "  访问地址：http://${SERVER_HOST}:6000"
         echo "  部署目录：${DEPLOY_DIR}"
         echo ""
         echo "常用命令:"

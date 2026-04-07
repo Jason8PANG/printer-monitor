@@ -13,22 +13,22 @@ ExecStart=/bin/bash -c '/usr/bin/docker start printer-monitor || /usr/bin/docker
   --name printer-monitor \
   --privileged \
   --restart unless-stopped \
-  -p 3000:3000 \
+  -p 6000:6000 \
   -p 631:631 \
   -v printer-data:/var/log/cups \
   -v printer-config:/etc/cups \
   -e TZ=Asia/Shanghai \
-  -e PORT=3000 \
+  -e PORT=6000 \
   registry.cn-beijing.aliyuncs.com/openclaw/printer-monitor:centos-latest || docker run -d \
   --name printer-monitor \
   --privileged \
   --restart unless-stopped \
-  -p 3000:3000 \
+  -p 6000:6000 \
   -p 631:631 \
   -v printer-data:/var/log/cups \
   -v printer-config:/etc/cups \
   -e TZ=Asia/Shanghai \
-  -e PORT=3000 \
+  -e PORT=6000 \
   printer-monitor:centos'
 
 # 停止容器

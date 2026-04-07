@@ -7,7 +7,7 @@ services:
     # image: your-username/printer-monitor:latest
     container_name: printer-monitor
     ports:
-      - "3000:3000"
+      - "6000:6000"  # Web 界面
       - "631:631"  # CUPS Web 界面
     volumes:
       # 持久化 CUPS 配置
@@ -16,7 +16,7 @@ services:
       # 如果需要添加自定义打印机配置
       # - ./printers.conf:/etc/cups/printers.conf:ro
     environment:
-      - PORT=3000
+      - PORT=6000
       - TZ=Asia/Shanghai
     restart: unless-stopped
     privileged: true  # 需要访问系统服务
