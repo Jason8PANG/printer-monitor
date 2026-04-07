@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  printer-monitor:
+    build: .
+    # 或者使用预构建镜像
+    # image: your-username/printer-monitor:latest
+    container_name: printer-monitor
+    ports:
+      - "3000:3000"
+      - "631:631"  # CUPS Web 界面
+    volumes:
+      # 持久化 CUPS 配置
+      - cups-config:/etc/cups
+      - cups-logs:/var/log/cups
+      # 如果需要添加自定义打印机配置
+      # - ./printers.conf:/etc/cups/printers.conf:ro
+    environment:
+      - PORT=3000
+      - TZ=Asia/Shanghai
+    restart: unless-stopped
+    privileged: true  # 需要访问系统服务
+    networks:
+      - printer-net
+
+volumes:
+  cups-config:
+  cups-logs:
+
+networks:
+  printer-net:
+    driver: bridge

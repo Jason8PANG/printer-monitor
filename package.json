@@ -1,0 +1,15 @@
+{
+  "name": "printer-monitor",
+  "version": "1.0.0",
+  "description": "Linux printer status monitor with auto-recovery",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-cups": "^0.4.0",
+    "systeminformation": "^5.21.20"
+  }
+}
