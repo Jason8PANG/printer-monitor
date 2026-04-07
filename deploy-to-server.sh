@@ -7,7 +7,7 @@ set -e
 # ============================================
 
 # 配置
-SERVER_HOST="${SERVER_HOST:-suzweb02}"
+SERVER_HOST="${SERVER_HOST:-suzvweb02}"
 SERVER_USER="${SERVER_USER:-root}"
 DEPLOY_DIR="${DEPLOY_DIR:-/opt/printer-monitor}"
 PROJECT_NAME="printer-monitor"
