@@ -29,7 +29,7 @@ if [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
     echo "用法：$0 [选项]"
     echo ""
     echo "选项:"
-    echo "  --host HOST      服务器主机名或 IP (默认：suzweb02)"
+    echo "  --host HOST      服务器主机名或 IP (默认：suzvweb02)"
     echo "  --user USER      SSH 用户名 (默认：root)"
     echo "  --dir DIR        部署目录 (默认：/opt/printer-monitor)"
     echo "  --rollback       回滚到上一个版本"
