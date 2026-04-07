@@ -12,9 +12,8 @@ services:
     volumes:
       # 持久化 CUPS 配置
       - cups-config:/etc/cups
+      # 持久化 CUPS 日志
       - cups-logs:/var/log/cups
-      # 如果需要添加自定义打印机配置
-      # - ./printers.conf:/etc/cups/printers.conf:ro
     environment:
       - PORT=6000
       - TZ=Asia/Shanghai

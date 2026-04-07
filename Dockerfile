@@ -6,7 +6,7 @@ RUN apk add --no-cache \
     cups-client \
     cups-libs \
     dbus \
-    ping \
+    iputils \
     && rm -rf /var/cache/apk/*
 
 # 创建工作目录
