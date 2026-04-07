@@ -1,0 +1,41 @@
+[Unit]
+Description=Printer Monitor Docker Container
+After=network-online.target docker.service cups.service
+Requires=docker.service cups.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+# 启动容器
+ExecStart=/bin/bash -c '/usr/bin/docker start printer-monitor || /usr/bin/docker run -d \
+  --name printer-monitor \
+  --privileged \
+  --restart unless-stopped \
+  -p 3000:3000 \
+  -p 631:631 \
+  -v printer-data:/var/log/cups \
+  -v printer-config:/etc/cups \
+  -e TZ=Asia/Shanghai \
+  -e PORT=3000 \
+  registry.cn-beijing.aliyuncs.com/openclaw/printer-monitor:centos-latest || docker run -d \
+  --name printer-monitor \
+  --privileged \
+  --restart unless-stopped \
+  -p 3000:3000 \
+  -p 631:631 \
+  -v printer-data:/var/log/cups \
+  -v printer-config:/etc/cups \
+  -e TZ=Asia/Shanghai \
+  -e PORT=3000 \
+  printer-monitor:centos'
+
+# 停止容器
+ExecStop=/usr/bin/docker stop printer-monitor
+
+# 容器健康检查
+ExecReload=/bin/bash -c '/usr/bin/docker restart printer-monitor'
+
+[Install]
+WantedBy=multi-user.target

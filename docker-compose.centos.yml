@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  printer-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.centos
+    image: printer-monitor:centos
+    container_name: printer-monitor
+    privileged: true
+    ports:
+      - "3000:3000"
+      - "631:631"
+    volumes:
+      # CUPS 日志持久化
+      - printer-data:/var/log/cups
+      # CUPS 配置持久化
+      - printer-config:/etc/cups
+    environment:
+      - TZ=Asia/Shanghai
+      - PORT=3000
+    restart: unless-stopped
+    networks:
+      - printer-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    # 资源限制（可选）
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+volumes:
+  printer-data:
+    driver: local
+  printer-config:
+    driver: local
+
+networks:
+  printer-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

@@ -1,0 +1,64 @@
+# CentOS 7/8/Stream 版本
+# 适用于 CentOS 服务器的 Docker 部署
+FROM centos:stream9
+
+# 设置环境变量
+ENV NODE_VERSION=20
+ENV PORT=3000
+ENV TZ=Asia/Shanghai
+
+# 安装 EPEL 和必要依赖
+RUN yum install -y epel-release && \
+    yum install -y \
+    cups \
+    cups-client \
+    cups-libs \
+    cups-daemon \
+    dbus \
+    dbus-daemon \
+    iputils \
+    wget \
+    shadow-utils \
+    && yum clean all
+
+# 安装 Node.js 20
+RUN curl -fsSL https://rpm.nodesource.com/setup_20.x | bash - && \
+    yum install -y nodejs && \
+    yum clean all
+
+# 验证安装
+RUN node -v && npm -v
+
+# 创建工作目录
+WORKDIR /app
+
+# 复制 package.json
+COPY package.json ./
+
+# 安装 Node 依赖
+RUN npm install --production
+
+# 复制应用代码
+COPY server.js ./
+COPY public/ ./public/
+
+# 创建必要的目录
+RUN mkdir -p /var/run/cups /var/run/dbus /var/log/cups /etc/cups && \
+    chmod 755 /var/run/cups /var/run/dbus /var/log/cups /etc/cups
+
+# 暴露端口
+EXPOSE 3000 631
+
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:3000/ || exit 1
+
+# 复制启动脚本
+COPY docker-entrypoint.centos.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
+# 创建 systemd 服务文件（可选，用于宿主机管理）
+COPY printer-monitor.service /etc/systemd/system/printer-monitor.service 2>/dev/null || true
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["node", "server.js"]

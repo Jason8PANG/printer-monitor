@@ -14,7 +14,21 @@
 
 ## 📦 安装方法
 
-### 方法一：Docker Compose（推荐）
+### 方法一：CentOS Docker（推荐）
+
+```bash
+# 一键部署脚本
+curl -sSL https://raw.githubusercontent.com/Jason8PANG/printer-monitor/main/deploy-centos.sh | sudo bash
+
+# 或手动执行
+git clone https://github.com/Jason8PANG/printer-monitor.git
+cd printer-monitor
+sudo ./deploy-centos.sh
+```
+
+详细文档：**[DEPLOY-CENTOS.md](DEPLOY-CENTOS.md)**
+
+### 方法二：Docker Compose
 
 ```bash
 # 1. 进入项目目录
@@ -31,7 +45,7 @@ docker-compose logs -f
 # CUPS 原生界面：http://localhost:631
 ```
 
-### 方法二：Docker 直接运行
+### 方法三：Docker 直接运行
 
 ```bash
 # 构建镜像
@@ -53,7 +67,7 @@ docker run -d \
 docker logs -f printer-monitor
 ```
 
-### 方法三：本地安装（无需 Docker）
+### 方法四：本地安装（无需 Docker）
 
 ```bash
 # 1. 安装系统依赖 (Debian/Ubuntu)
